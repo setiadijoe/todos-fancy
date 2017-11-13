@@ -1,5 +1,6 @@
 require('dotenv').config()
 const jwt = require('jsonwebtoken')
+const Todo = require('../models/todos')
 const key = process.env.JWT_SECRET
 
 const hasLogin = (req, res, next) => {

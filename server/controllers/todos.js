@@ -1,6 +1,6 @@
 const Todo = require('../models/todos')
 
-const getAllTodos = (req, res) => {
+const getAllUsersTodos = (req, res) => {
   Todo.find()
   .populate('user_id')
   .then(data => {
@@ -9,6 +9,63 @@ const getAllTodos = (req, res) => {
   .catch(err => res.status(400).send(err))
 }
 
+const getAllTodos = (req, res) => {
+  Todo.find({user_id: req.headers.id})
+  .populate('user_id')
+  .then(data => {
+    res.status(200).send(data)
+  })
+  .catch(err => res.status(400).send(err))
+}
+
+const createTodo = (req, res) => {
+  let todo = new Todo({
+    user_id: req.headers.id,
+    todo_name: req.body.todo_name
+  })
+  todo.save()
+  .then(newTodo => {
+    res.status(200).send({
+      message: 'New Todo has been added',
+      newTodo
+    })
+  })
+  .catch(err => res.status(400).send(err))
+}
+
+const updateTodo = (req, res) => {
+  Todo.findByIdAndUpdate(req.params.id, {
+    $set: {
+      todo_name: req.body.todo_name,
+      isfinished: req.body.isfinished
+    }
+  })
+  .then(todosData => {
+    res.status(201).send({
+      message: 'todo has been update',
+      todosData
+    })
+  })
+  .catch(err =>{
+    console.log('salah yang ini?'); 
+    res.status(400).send(err)
+  })
+}
+
+const removeTodo = (req, res) => {
+  Todo.findByIdAndRemove(req.params.id)
+  .then(deletedTodo => {
+    res.status(200).send({
+      message: 'This todo has been deleted',
+      deletedTodo
+    })
+  })
+  .catch(err => res.status(400).send(err))
+}
+
 module.exports = {
-  getAllTodos
+  getAllTodos,
+  createTodo,
+  updateTodo,
+  removeTodo
 }
