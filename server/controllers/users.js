@@ -12,6 +12,17 @@ const getAllUsers = (req, res) => {
   .catch(err => res.status(400).send(err))
 }
 
+const findOneUser = (req, res) => {
+  User.findById(req.params.id)
+  .then(user => {
+    res.status(200).send({
+      message: 'This is what you want?',
+      user
+    })
+  })
+  .catch(err => res.status(400).send(err))
+}
+
 const signUpUser = (req, res) => {
   let user = new User(req.body)
   user.save()
@@ -63,9 +74,22 @@ const updateUser = (req, res) => {
   .catch(err => res.status(400).send(err))
 }
 
+const deleteUser = (req, res) => {
+  User.findByIdAndRemove(req.params.id)
+  .then(removeUser => {
+    res.status(200).send({
+      message: 'One user has been remove',
+      removeUser
+    })
+  })
+  .catch(err => res.status(400).send(err))
+}
+
 module.exports = {
   getAllUsers,
   signUpUser,
   signInUser,
-  updateUser
+  updateUser,
+  deleteUser,
+  findOneUser
 }
