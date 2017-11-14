@@ -6,7 +6,7 @@ const getAllUsersTodos = (req, res) => {
   .then(data => {
     res.status(200).send(data)
   })
-  .catch(err => res.status(400).send(err))
+  .catch(err => res.status(500).send(err))
 }
 
 const getAllTodos = (req, res) => {
@@ -15,7 +15,7 @@ const getAllTodos = (req, res) => {
   .then(data => {
     res.status(200).send(data)
   })
-  .catch(err => res.status(400).send(err))
+  .catch(err => res.status(500).send(err))
 }
 
 const createTodo = (req, res) => {
@@ -30,7 +30,7 @@ const createTodo = (req, res) => {
       newTodo
     })
   })
-  .catch(err => res.status(400).send(err))
+  .catch(err => res.status(500).send(err))
 }
 
 const updateTodo = (req, res) => {
@@ -48,7 +48,7 @@ const updateTodo = (req, res) => {
   })
   .catch(err =>{
     console.log('salah yang ini?'); 
-    res.status(400).send(err)
+    res.status(500).send(err)
   })
 }
 
@@ -60,7 +60,7 @@ const removeTodo = (req, res) => {
       deletedTodo
     })
   })
-  .catch(err => res.status(400).send(err))
+  .catch(err => res.status(500).send(err))
 }
 
 module.exports = {

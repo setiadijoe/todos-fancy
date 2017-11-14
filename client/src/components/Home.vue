@@ -1,30 +1,46 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <div class="container" v-for="list in todo_list" :key="list._id">
-      {{list.todo_name}}
+    <div v-if="loginState === false">
+      <button type="button" class="btn btn-primary"><a href="/#/login">Sign In</a></button>
+    </div>
+    <div v-if="loginState === true">
+      <button type="button" class="btn btn-primary" @click.prevent="signOut()"><a href="/">Sign Out</a></button>
+      <main-content :todo_list="todo_list"></main-content>
     </div>
   </div>
 </template>
 
 <script>
+import MainContent from '@/components/MainContent'
 import { mapState, mapActions } from 'vuex'
 export default {
+  components: {
+    MainContent
+  },
   name: 'Home',
   data () {
     return {
       msg: 'Todo Apps Fancy',
-      todo: ['lalala', 'yeyeyeye']
+      loginState: false
     }
   },
   computed: {
     ...mapState(['todo_list'])
   },
   methods: {
-    ...mapActions(['getAllTodos'])
+    ...mapActions(['getAllTodos']),
+    signOut: function () {
+      localStorage.removeItem('token')
+    }
   },
   created () {
     this.getAllTodos()
+    if (localStorage.getItem('token') === null) {
+      this.loginState = false
+    } else {
+      this.loginState = true
+    }
   }
 }
 </script>

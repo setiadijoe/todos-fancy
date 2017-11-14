@@ -16,7 +16,7 @@
       </div>
 
       <div class="form__field">
-        <input type="submit" value="Sign In" @click="signin()">
+        <input type="submit" value="Sign In" @click.prevent="signin()">
       </div>
 
     </form>
@@ -49,7 +49,7 @@ export default {
       .then(response => {
         console.log(response.data)
         localStorage.setItem('token', response.data.token)
-        this.$router.push('/#/')
+        this.$router.push('/')
       })
       .catch((error) => {
         console.log('====================================')
