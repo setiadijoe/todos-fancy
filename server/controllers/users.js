@@ -9,7 +9,7 @@ const getAllUsers = (req, res) => {
   .then(userData => {
     res.status(200).send(userData)
   })
-  .catch(err => res.status(400).send(err))
+  .catch(err => res.status(500).send(err))
 }
 
 const findOneUser = (req, res) => {
@@ -20,11 +20,15 @@ const findOneUser = (req, res) => {
       user
     })
   })
-  .catch(err => res.status(400).send(err))
+  .catch(err => res.status(500).send(err))
 }
 
 const signUpUser = (req, res) => {
-  let user = new User(req.body)
+  let user = new User({
+    name: req.body.name,
+    username: req.body.username,
+    password: req.body.password
+  })
   user.save()
   .then(newUser => {
     res.status(200).send({
@@ -32,7 +36,7 @@ const signUpUser = (req, res) => {
       newUser
     })
   })
-  .catch(err=> res.status(400).send(err))
+  .catch(err=> res.status(500).send(err))
 }
 
 const signInUser = (req, res) => {
@@ -71,7 +75,7 @@ const updateUser = (req, res) => {
       newData
     })
   })
-  .catch(err => res.status(400).send(err))
+  .catch(err => res.status(500).send(err))
 }
 
 const deleteUser = (req, res) => {
@@ -82,7 +86,7 @@ const deleteUser = (req, res) => {
       removeUser
     })
   })
-  .catch(err => res.status(400).send(err))
+  .catch(err => res.status(500).send(err))
 }
 
 module.exports = {
