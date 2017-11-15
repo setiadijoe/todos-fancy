@@ -74,6 +74,7 @@ const actions = {
       }
     }
     status.isfinished = !status.isfinished
+    status.updatedAt = new Date().toISOString()
     http.put(`/todos/${status._id}`, status, config)
     .then(({data}) => {
       console.log('Data sudah diupdate belum ?', data)

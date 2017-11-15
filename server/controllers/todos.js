@@ -40,15 +40,10 @@ const createTodo = (req, res) => {
 }
 
 const updateTodo = (req, res) => {
-  console.log('====================================');
-  console.log(req.body);
-  console.log('====================================');
-  console.log('====================================');
-  console.log(req.params);
-  console.log('====================================');
   Todo.findByIdAndUpdate(req.params.id, {
     $set: {
-      isfinished: req.body.isfinished
+      isfinished: req.body.isfinished,
+      updatedAt: req.body.updatedAt
     }
   }, { new: true })
   .then(todosData => {
