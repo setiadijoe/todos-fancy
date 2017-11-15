@@ -8,21 +8,25 @@
         <th>Remove</th>
       </tr>
       <tr v-for="task in todo_list" :key="task._id">
-        <td><button>Finish</button></td>
+        <td><button @click.prevent="finishTask(task)">Finish</button></td>
         <td>{{ task.isfinished }}</td>
         <td>{{ task.todo_name }}</td>
-        <td><button>Remove</button></td>
+        <td><button @click="removeTask(task)">Remove</button></td>
       </tr>
     </table>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   props: ['todo_list'],
   data () {
     return {
     }
+  },
+  methods: {
+    ...mapActions(['finishTask', 'removeTask'])
   }
 }
 </script>

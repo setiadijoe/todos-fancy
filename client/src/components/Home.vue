@@ -5,7 +5,8 @@
       <button type="button" class="btn btn-primary"><a href="/#/login">Sign In</a></button>
     </div>
     <div v-if="loginState === true">
-      <button type="button" class="btn btn-primary" @click.prevent="signOut()"><a href="/">Sign Out</a></button>
+      <button type="button" class="btn btn-danger" @click="signOut()"><a href="/">Sign Out</a></button>
+      <modal-form :todo_list="todo_list"></modal-form>
       <main-content :todo_list="todo_list"></main-content>
     </div>
   </div>
@@ -13,10 +14,12 @@
 
 <script>
 import MainContent from '@/components/MainContent'
+import ModalForm from '@/components/ModalForm'
 import { mapState, mapActions } from 'vuex'
 export default {
   components: {
-    MainContent
+    MainContent,
+    ModalForm
   },
   name: 'Home',
   data () {
@@ -32,9 +35,11 @@ export default {
     ...mapActions(['getAllTodos']),
     signOut: function () {
       localStorage.removeItem('token')
+      window.location.reload()
+      this.$router.push('/')
     }
   },
-  created () {
+  mounted () {
     this.getAllTodos()
     if (localStorage.getItem('token') === null) {
       this.loginState = false

@@ -19,6 +19,9 @@ const getAllTodos = (req, res) => {
 }
 
 const createTodo = (req, res) => {
+  console.log('=============INI BODY nya ==========');
+  console.log(req.body);
+  console.log('====================================');
   let todo = new Todo({
     user_id: req.headers.id,
     todo_name: req.body.todo_name
@@ -30,16 +33,24 @@ const createTodo = (req, res) => {
       newTodo
     })
   })
-  .catch(err => res.status(500).send(err))
+  .catch(err => {
+    console.error(err)
+    res.status(500).send(err)
+  })
 }
 
 const updateTodo = (req, res) => {
+  console.log('====================================');
+  console.log(req.body);
+  console.log('====================================');
+  console.log('====================================');
+  console.log(req.params);
+  console.log('====================================');
   Todo.findByIdAndUpdate(req.params.id, {
     $set: {
-      todo_name: req.body.todo_name,
       isfinished: req.body.isfinished
     }
-  })
+  }, { new: true })
   .then(todosData => {
     res.status(201).send({
       message: 'todo has been update',
