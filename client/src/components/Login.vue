@@ -47,6 +47,8 @@ export default {
         console.log('====================================')
         console.log('lalallala')
         console.log('====================================')
+        alert('You has not sign up. Choose Sign Up')
+        this.$router.push('/signup')
         console.log(error)
       })
     }

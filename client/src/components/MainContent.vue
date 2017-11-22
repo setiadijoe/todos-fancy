@@ -10,12 +10,12 @@
         <th>Remove</th>
       </tr>
       <tr v-for="task in todo_list" :key="task._id">
-        <td><button @click.prevent="finishTask(task)">Finish</button></td>
+        <td><button style="btn btn-success" @click.prevent="finishTask(task)">Finish</button></td>
         <td>{{ task.isfinished }}</td>
         <td>{{ task.todo_name }}</td>
         <td>{{ task.createdAt }}</td>
         <td>{{ task.updatedAt }}</td>
-        <td><button @click="removeTask(task)">Remove</button></td>
+        <td><button style="btn btn-danger" @click="removeTask(task)">Remove</button></td>
       </tr>
     </table>
   </div>

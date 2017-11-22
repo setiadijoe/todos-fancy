@@ -25,15 +25,10 @@ export default {
     signUp () {
       this.$http.post('/users/signup', this.signup)
       .then(({data}) => {
-        console.log('==========Ini berhasil dapat========')
-        console.log(data)
-        console.log('====================================')
         this.$router.push('/login')
       })
       .catch(err => {
-        console.log('===========Ini error================')
         console.error(err)
-        console.log('====================================')
       })
     }
   }

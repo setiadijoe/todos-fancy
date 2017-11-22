@@ -35,13 +35,14 @@ export default {
     ...mapActions(['getAllTodos']),
     signOut: function () {
       localStorage.removeItem('token')
+      this.loginState = false
       window.location.reload()
       this.$router.push('/')
     }
   },
   mounted () {
     this.getAllTodos()
-    if (localStorage.getItem('token') === null) {
+    if (localStorage.getItem('token') === undefined || localStorage.getItem('token') === null) {
       this.loginState = false
     } else {
       this.loginState = true
@@ -53,7 +54,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h1, h2 {
-  font-weight: normal;
+  font-weight: bold;
 }
 ul {
   list-style-type: none;

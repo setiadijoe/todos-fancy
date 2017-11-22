@@ -50,12 +50,17 @@ const signInUser = (req, res) => {
         isAdmin: userData.isAdmin
       }
       let token = jwt.sign(payload, key)
+      console.log('Sukses login');
       res.status(201).send({message: 'User has succesfully login', token})
     } else {
+      console.log('gagal login');
       res.status(401).send({message: 'password or username not valid'})
     }
   })
-  .catch(err=> res.send(err))
+  .catch(err=> {
+    console.log('belum daftar');
+    res.status(500).send(err)
+  })
 }
 
 const updateUser = (req, res) => {
