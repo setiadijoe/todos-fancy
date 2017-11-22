@@ -34,19 +34,14 @@ export default {
   },
   methods: {
     signin: function () {
-      console.log('====================================')
-      console.log(this.login)
-      console.log('====================================')
       this.$http.post('/users/signin', this.login)
       .then(response => {
         console.log(response.data)
         localStorage.setItem('token', response.data.token)
         this.$router.push('/')
+        window.location.reload()
       })
       .catch((error) => {
-        console.log('====================================')
-        console.log('lalallala')
-        console.log('====================================')
         alert('You has not sign up. Choose Sign Up')
         this.$router.push('/signup')
         console.log(error)
