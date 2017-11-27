@@ -6,6 +6,7 @@ import router from './router'
 import store from './store'
 import axios from 'axios'
 
+// baseURL: 'http://35.197.128.71'
 Vue.prototype.$http = axios.create({
   baseURL: 'http://localhost:3000'
 })

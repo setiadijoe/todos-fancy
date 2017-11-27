@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+// baseURL: 'http://35.197.128.71'
 const http = axios.create({
   baseURL: 'http://localhost:3000'
 })

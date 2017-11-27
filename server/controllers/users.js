@@ -2,6 +2,7 @@ require('dotenv').config()
 const User = require('../models/users')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const FB = require('fb')
 const key =  process.env.JWT_SECRET
 
 const getAllUsers = (req, res) => {
@@ -63,6 +64,63 @@ const signInUser = (req, res) => {
   })
 }
 
+const setFBAccessToken = (req, res, next) => {
+  console.log('====================================');
+  console.log(req.headers.fb_accesstoken);
+  console.log('====================================');
+  FB.setAccessToken(req.headers.fb_accesstoken)
+  next()
+}
+
+const signInFB = (req, res) => {
+  console.log('masuk signin FB gak?')
+  FB.api('/me', { fields: ['id', 'name', 'email']}, function (response) {
+    console.log(response)
+    User.findOne({email: response.email})
+    .then(result => {
+      console.log('jadi sukses dicari gak? ',result);
+      if (!result) {
+        let user = new User({
+          fbID: response.id,
+          name: response.name,
+          username: '',
+          password: '',
+          email: response.email
+        })
+        user.save()
+        .then(newUser => {
+          console.log('masuk sini gak? ',newUser);
+          let token = jwt.sign({
+            _id: newUser._id,
+            fbID: newUser.fbID,
+            name: newUser.name,
+            email: newUser.email
+          }, key)
+          res.status(200).send({
+            message: 'User use FB Login',
+            token
+          })
+        })
+      } else {
+        let token = jwt.sign({
+          _id: result._id,
+          fbID: result.fbID,
+          name: result.name,
+          email: result.email
+        }, key)
+        res.status(200).send({
+          message: 'This user has sign in before',
+          token
+        })
+      }
+    })
+    .catch(err => {
+      console.log('masuk error ya? ', err);
+      res.status(500).send(err)
+    })
+  })
+}
+
 const updateUser = (req, res) => {
   User.findByIdAndUpdate(req.params.id,
     {
@@ -100,5 +158,7 @@ module.exports = {
   signInUser,
   updateUser,
   deleteUser,
-  findOneUser
+  findOneUser,
+  setFBAccessToken,
+  signInFB
 }

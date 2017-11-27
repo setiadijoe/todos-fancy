@@ -35,6 +35,7 @@ export default {
     ...mapActions(['getAllTodos']),
     signOut: function () {
       localStorage.removeItem('token')
+      localStorage.removeItem('fb_accessToken')
       this.loginState = false
       window.location.reload()
       this.$router.push('/')

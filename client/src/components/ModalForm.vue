@@ -5,8 +5,8 @@
             <input type="text" placeholder="adding your task" v-model="task.todo_name" required>
             <input class="btn btn-primary" type="button" value="Submit" v-on:click.prevent="writeNewTodo(task)">
         </form>
-      </div><!--close modal class -->
-    </div><!-- ckise modal div -->
+      </div>
+    </div>
 
   </div>
 </template>

@@ -7,13 +7,17 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  fbID: {
+    type: String
+  },
   username: {
-    type: String,
-    required: true
+    type: String
   },
   password: {
-    type: String,
-    required: true
+    type: String
+  },
+  email: {
+    type: String
   },
   isAdmin: {
     type: Boolean,

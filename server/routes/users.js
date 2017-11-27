@@ -8,6 +8,7 @@ router.get('/:id', Auth.hasLogin, User.findOneUser)
 router.post('/', Auth.hasLogin, Auth.isAdmin, User.signUpUser)
 router.post('/signup', User.signUpUser)
 router.post('/signin', User.signInUser)
+router.post('/signin/fb', User.setFBAccessToken, User.signInFB)
 router.put('/:id', Auth.hasLogin, User.updateUser)
 router.delete('/:id', Auth.hasLogin, Auth.isAdmin, User.deleteUser)
 
